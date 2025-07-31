@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres
+    container_name: template-app-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: template-app
+    volumes:
+      - data_postgres:/var/lib/postgresql/data
+  redis:
+    image: redis
+    container_name: template-app-redis
+    ports:
+      - "63798:6379"
+    volumes:
+      - data_redis:/data
+
+volumes:
+  data_postgres:
+  data_redis:
