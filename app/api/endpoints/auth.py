@@ -52,11 +52,13 @@ def register(
     """
     Create new user.
     """
-    user = db.query(models.User).filter(models.User.email == user_in.email).first()
+    user = db.query(models.User).filter(
+        (models.User.email == user_in.email) | (models.User.username == user_in.username)
+    ).first()
     if user:
         raise HTTPException(
             status_code=400,
-            detail="The user with this email already exists in the system.",
+            detail="A user with this email or username already exists in the system.",
         )
     
     user = models.User(

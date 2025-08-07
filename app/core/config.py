@@ -4,18 +4,19 @@ from pydantic_settings import BaseSettings
 import os
 
 class Settings(BaseSettings):
+    # App Settings - these can have defaults since they're less likely to change
     PROJECT_NAME: str = "FastAPI Template"
     VERSION: str = "1.0.0"
     DESCRIPTION: str = "A FastAPI template with authentication and database"
     API_V1_STR: str = "/api/v1"
     
-    # Database
-    DATABASE_URL: str = "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/template-app"
+    # Database - no default, must be provided via .env
+    DATABASE_URL: str
     
-    # Security
-    SECRET_KEY: str = "your-secret-key-here"
-    ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    # Security - no defaults for sensitive values
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"  # This can have a default
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # This can have a default
     
     # CORS
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
@@ -30,5 +31,6 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = ".env"
+        case_sensitive = True  # Optional: makes env vars case sensitive
 
 settings = Settings()

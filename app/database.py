@@ -12,7 +12,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 database = Database(settings.DATABASE_URL)
 
 Base = declarative_base()
-
 # Dependency to get DB session
 def get_db():
     db = SessionLocal()
